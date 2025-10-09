@@ -9,6 +9,12 @@ import sharp from 'sharp'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
+import { Proyectos } from './collections/Proyectos'
+import { CategoriasServicios } from './collections/CategoriasServicios'
+import { CorreosNotificacion } from './collections/CorreosNotificacion'
+import { Testimonios } from './collections/Testimonios'
+import { ArticulosBlog } from './collections/ArticulosBlog'
+import { es } from '@payloadcms/translations/languages/es'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -19,8 +25,25 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    meta: {
+      title: 'Impronta - Estudio de Arquitectura',
+      description: 'Panel de administración del estudio de arquitectura e interiorismo',
+    },
+    dateFormat: 'dd/MM/yyyy HH:mm',
   },
-  collections: [Users, Media],
+  i18n: {
+    fallbackLanguage: 'es',
+    supportedLanguages: { es },
+  },
+  collections: [
+    Users,
+    Media,
+    Proyectos,
+    CategoriasServicios,
+    CorreosNotificacion,
+    Testimonios,
+    ArticulosBlog,
+  ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
