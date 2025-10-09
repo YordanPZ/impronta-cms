@@ -33,8 +33,8 @@ export const ArticulosBlog: CollectionConfig = {
         beforeChange: [
           ({ data, operation }) => {
             if (operation === 'create' || operation === 'update') {
-              if (data.titulo && !data.slug) {
-                data.slug = data.titulo
+              if (data?.titulo && !data?.slug) {
+                data.slug = data?.titulo
                   .toLowerCase()
                   .replace(/[^a-z0-9áéíóúñü]+/g, '-')
                   .replace(/^-+|-+$/g, '')
@@ -159,15 +159,16 @@ export const ArticulosBlog: CollectionConfig = {
       type: 'number',
       label: 'Tiempo de Lectura Estimado',
       admin: {
-        description: 'Tiempo estimado de lectura en minutos (se calcula automáticamente si se deja vacío)',
+        description:
+          'Tiempo estimado de lectura en minutos (se calcula automáticamente si se deja vacío)',
       },
       hooks: {
         beforeChange: [
           ({ data }) => {
-            if (!data.lectura_estimada && data.contenido) {
+            if (!data?.lectura_estimada && data?.contenido) {
               // Calcular tiempo de lectura basado en el contenido
               const palabrasPorMinuto = 200
-              const texto = JSON.stringify(data.contenido)
+              const texto = JSON.stringify(data?.contenido)
               const palabras = texto.split(/\s+/).length
               data.lectura_estimada = Math.ceil(palabras / palabrasPorMinuto)
             }
