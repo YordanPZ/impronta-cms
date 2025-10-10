@@ -8,18 +8,7 @@ export const Proyectos: CollectionConfig = {
     group: 'Gestión de Proyectos',
   },
   access: {
-    read: ({ req }) => {
-      // Si hay usuario autenticado, puede ver todos los proyectos
-      if (req.user) {
-        return true
-      }
-      // Si no hay usuario, solo proyectos visibles
-      return {
-        visible: {
-          equals: true,
-        },
-      }
-    },
+    read: () => true, // Acceso público de lectura
     create: ({ req: { user } }) => !!user,
     update: ({ req: { user } }) => !!user,
     delete: ({ req: { user } }) => !!user,
@@ -77,15 +66,6 @@ export const Proyectos: CollectionConfig = {
       defaultValue: 'desarrollo',
       admin: {
         description: 'Estado actual del proyecto',
-      },
-    },
-    {
-      name: 'visible',
-      type: 'checkbox',
-      label: 'Proyecto Visible',
-      defaultValue: false,
-      admin: {
-        description: 'Controla si el proyecto es visible públicamente',
       },
     },
     {
