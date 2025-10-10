@@ -7,6 +7,12 @@ export const Proyectos: CollectionConfig = {
     description: 'Gestión completa de proyectos de arquitectura, interiorismo y paisajismo',
     group: 'Gestión de Proyectos',
   },
+  access: {
+    read: () => true, // Acceso público de lectura
+    create: ({ req: { user } }) => !!user,
+    update: ({ req: { user } }) => !!user,
+    delete: ({ req: { user } }) => !!user,
+  },
   labels: {
     singular: 'Proyecto',
     plural: 'Proyectos',

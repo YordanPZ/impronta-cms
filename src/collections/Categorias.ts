@@ -7,6 +7,12 @@ export const Categorias: CollectionConfig = {
     description: 'Categorías general de los proyectos',
     group: 'Gestión de Proyectos',
   },
+  access: {
+    read: () => true, // Acceso público de lectura
+    create: ({ req: { user } }) => !!user,
+    update: ({ req: { user } }) => !!user,
+    delete: ({ req: { user } }) => !!user,
+  },
   labels: {
     singular: 'Categoría',
     plural: 'Categorías',

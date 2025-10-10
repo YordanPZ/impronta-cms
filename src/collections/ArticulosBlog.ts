@@ -8,6 +8,12 @@ export const ArticulosBlog: CollectionConfig = {
     group: 'Contenido del Sitio',
     defaultColumns: ['titulo', 'autor', 'fecha_publicacion', 'estado', 'categoria'],
   },
+  access: {
+    read: () => true, // Acceso público de lectura
+    create: ({ req: { user } }) => !!user,
+    update: ({ req: { user } }) => !!user,
+    delete: ({ req: { user } }) => !!user,
+  },
   labels: {
     singular: 'Artículo del Blog',
     plural: 'Artículos del Blog',
