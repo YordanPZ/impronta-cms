@@ -1,7 +1,5 @@
 import type { CollectionConfig } from 'payload'
 
-console.log('Colección Proyectos cargando...')
-
 export const Proyectos: CollectionConfig = {
   slug: 'proyectos',
   admin: {
@@ -25,16 +23,10 @@ export const Proyectos: CollectionConfig = {
     },
     {
       name: 'tipo',
-      type: 'select',
+      type: 'relationship',
+      relationTo: 'categorias',
       required: true,
       label: 'Tipo de Proyecto',
-      options: [
-        { label: 'Casa Residencial', value: 'casa' },
-        { label: 'Interiorismo', value: 'interiorismo' },
-        { label: 'Paisajismo', value: 'paisajismo' },
-        { label: 'Marca Comercial', value: 'marca' },
-        { label: 'Otro', value: 'otro' },
-      ],
       admin: {
         description: 'Categoría principal del proyecto',
       },
@@ -55,7 +47,6 @@ export const Proyectos: CollectionConfig = {
         description: 'Dirección o ubicación del proyecto',
       },
     },
-
     {
       name: 'estado',
       type: 'select',

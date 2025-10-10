@@ -10,11 +10,10 @@ import sharp from 'sharp'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
-import { Proyectos } from './collections/Proyectos'
-import { CategoriasServicios } from './collections/CategoriasServicios'
+import { Categorias } from './collections/Categorias'
 import { CorreosNotificacion } from './collections/CorreosNotificacion'
-import { Testimonios } from './collections/Testimonios'
 import { ArticulosBlog } from './collections/ArticulosBlog'
+import { Proyectos } from './collections/Proyectos'
 import { es } from '@payloadcms/translations/languages/es'
 
 const filename = fileURLToPath(import.meta.url)
@@ -36,15 +35,7 @@ export default buildConfig({
     fallbackLanguage: 'es',
     supportedLanguages: { es },
   },
-  collections: [
-    Users,
-    Media,
-    Proyectos,
-    CategoriasServicios,
-    CorreosNotificacion,
-    Testimonios,
-    ArticulosBlog,
-  ],
+  collections: [Users, Media, Proyectos, Categorias, CorreosNotificacion, ArticulosBlog],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

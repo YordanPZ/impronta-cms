@@ -63,16 +63,15 @@ export type SupportedTimezones =
 
 export interface Config {
   auth: {
-    users: UserAuthOperations;
+    Usuarios: UsuarioAuthOperations;
   };
   blocks: {};
   collections: {
-    users: User;
+    Usuarios: Usuario;
     media: Media;
     proyectos: Proyecto;
-    'categorias-servicios': CategoriasServicio;
+    categorias: Categoria;
     'correos-notificacion': CorreosNotificacion;
-    testimonios: Testimonio;
     'articulos-blog': ArticulosBlog;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -80,12 +79,11 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
-    users: UsersSelect<false> | UsersSelect<true>;
+    Usuarios: UsuariosSelect<false> | UsuariosSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     proyectos: ProyectosSelect<false> | ProyectosSelect<true>;
-    'categorias-servicios': CategoriasServiciosSelect<false> | CategoriasServiciosSelect<true>;
+    categorias: CategoriasSelect<false> | CategoriasSelect<true>;
     'correos-notificacion': CorreosNotificacionSelect<false> | CorreosNotificacionSelect<true>;
-    testimonios: TestimoniosSelect<false> | TestimoniosSelect<true>;
     'articulos-blog': ArticulosBlogSelect<false> | ArticulosBlogSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -97,15 +95,15 @@ export interface Config {
   globals: {};
   globalsSelect: {};
   locale: null;
-  user: User & {
-    collection: 'users';
+  user: Usuario & {
+    collection: 'Usuarios';
   };
   jobs: {
     tasks: unknown;
     workflows: unknown;
   };
 }
-export interface UserAuthOperations {
+export interface UsuarioAuthOperations {
   forgotPassword: {
     email: string;
     password: string;
@@ -125,9 +123,9 @@ export interface UserAuthOperations {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
+ * via the `definition` "Usuarios".
  */
-export interface User {
+export interface Usuario {
   id: number;
   updatedAt: string;
   createdAt: string;
@@ -209,7 +207,7 @@ export interface Proyecto {
   /**
    * Categoría principal del proyecto
    */
-  tipo: 'casa' | 'interiorismo' | 'paisajismo' | 'marca' | 'otro';
+  tipo: number | Categoria;
   /**
    * Descripción detallada del proyecto, objetivos y características
    */
@@ -261,69 +259,21 @@ export interface Proyecto {
   createdAt: string;
 }
 /**
- * Categorías de servicios de arquitectura e interiorismo
+ * Categorías general de los proyectos
  *
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "categorias-servicios".
+ * via the `definition` "categorias".
  */
-export interface CategoriasServicio {
+export interface Categoria {
   id: number;
   /**
-   * Nombre descriptivo de la categoría de servicio
+   * Nombre descriptivo de la categoría de proyecto
    */
   nombre: string;
   /**
-   * Descripción detallada de los servicios incluidos en esta categoría
+   * Descripción detallada de los proyectos incluidos en esta categoría
    */
   descripcion?: string | null;
-  /**
-   * Icono representativo de la categoría de servicio
-   */
-  icono?: (number | null) | Media;
-  /**
-   * Código hexadecimal del color principal (ej: #FF6B6B)
-   */
-  color_principal?: string | null;
-  /**
-   * Lista de servicios específicos dentro de esta categoría
-   */
-  servicios?:
-    | {
-        servicio: string;
-        descripcion_servicio?: string | null;
-        /**
-         * Tiempo estimado para completar este servicio
-         */
-        duracion_estimada?: string | null;
-        /**
-         * Precio inicial del servicio (en la moneda local)
-         */
-        precio_desde?: number | null;
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * Etapas del proceso de trabajo para esta categoría
-   */
-  proceso_trabajo?:
-    | {
-        etapa: string;
-        descripcion_etapa?: string | null;
-        /**
-         * Número de orden en el proceso
-         */
-        orden?: number | null;
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * Indica si esta categoría de servicio está disponible
-   */
-  activa?: boolean | null;
-  /**
-   * Marcar como categoría destacada en la página principal
-   */
-  destacada?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -391,78 +341,6 @@ export interface CorreosNotificacion {
      */
     hora_fin?: string | null;
   };
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * Gestión de testimonios y reseñas de clientes satisfechos
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "testimonios".
- */
-export interface Testimonio {
-  id: number;
-  /**
-   * Nombre completo del cliente que brinda el testimonio
-   */
-  nombre_cliente: string;
-  /**
-   * Nombre de la empresa o cargo del cliente (opcional)
-   */
-  empresa?: string | null;
-  /**
-   * Texto completo del testimonio del cliente
-   */
-  testimonio: string;
-  /**
-   * Proyecto específico al que se refiere este testimonio
-   */
-  proyecto_relacionado?: (number | null) | Proyecto;
-  /**
-   * Tipo de servicio que recibió el cliente
-   */
-  tipo_servicio?: ('casa' | 'interiorismo' | 'paisajismo' | 'marca' | 'renovacion' | 'consultoria' | 'otros') | null;
-  /**
-   * Calificación del servicio recibido
-   */
-  calificacion?: ('5' | '4' | '3' | '2' | '1') | null;
-  /**
-   * Fotografía del cliente (opcional, para mostrar en el sitio)
-   */
-  foto_cliente?: (number | null) | Media;
-  /**
-   * Fecha en que se recibió el testimonio
-   */
-  fecha_testimonio?: string | null;
-  /**
-   * Indica si este testimonio debe mostrarse públicamente
-   */
-  publicado?: boolean | null;
-  /**
-   * Marcar como testimonio destacado en la página principal
-   */
-  destacado?: boolean | null;
-  /**
-   * Correo electrónico del cliente (no se mostrará públicamente)
-   */
-  correo_cliente?: string | null;
-  /**
-   * Número de teléfono del cliente (no se mostrará públicamente)
-   */
-  telefono_cliente?: string | null;
-  /**
-   * Respuesta oficial del estudio al testimonio (opcional)
-   */
-  respuesta_estudio?: string | null;
-  /**
-   * Etiquetas para agrupar y filtrar testimonios
-   */
-  etiquetas?:
-    | {
-        etiqueta: string;
-        id?: string | null;
-      }[]
-    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -593,8 +471,8 @@ export interface PayloadLockedDocument {
   id: number;
   document?:
     | ({
-        relationTo: 'users';
-        value: number | User;
+        relationTo: 'Usuarios';
+        value: number | Usuario;
       } | null)
     | ({
         relationTo: 'media';
@@ -605,16 +483,12 @@ export interface PayloadLockedDocument {
         value: number | Proyecto;
       } | null)
     | ({
-        relationTo: 'categorias-servicios';
-        value: number | CategoriasServicio;
+        relationTo: 'categorias';
+        value: number | Categoria;
       } | null)
     | ({
         relationTo: 'correos-notificacion';
         value: number | CorreosNotificacion;
-      } | null)
-    | ({
-        relationTo: 'testimonios';
-        value: number | Testimonio;
       } | null)
     | ({
         relationTo: 'articulos-blog';
@@ -622,8 +496,8 @@ export interface PayloadLockedDocument {
       } | null);
   globalSlug?: string | null;
   user: {
-    relationTo: 'users';
-    value: number | User;
+    relationTo: 'Usuarios';
+    value: number | Usuario;
   };
   updatedAt: string;
   createdAt: string;
@@ -635,8 +509,8 @@ export interface PayloadLockedDocument {
 export interface PayloadPreference {
   id: number;
   user: {
-    relationTo: 'users';
-    value: number | User;
+    relationTo: 'Usuarios';
+    value: number | Usuario;
   };
   key?: string | null;
   value?:
@@ -664,9 +538,9 @@ export interface PayloadMigration {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users_select".
+ * via the `definition` "Usuarios_select".
  */
-export interface UsersSelect<T extends boolean = true> {
+export interface UsuariosSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -768,32 +642,11 @@ export interface ProyectosSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "categorias-servicios_select".
+ * via the `definition` "categorias_select".
  */
-export interface CategoriasServiciosSelect<T extends boolean = true> {
+export interface CategoriasSelect<T extends boolean = true> {
   nombre?: T;
   descripcion?: T;
-  icono?: T;
-  color_principal?: T;
-  servicios?:
-    | T
-    | {
-        servicio?: T;
-        descripcion_servicio?: T;
-        duracion_estimada?: T;
-        precio_desde?: T;
-        id?: T;
-      };
-  proceso_trabajo?:
-    | T
-    | {
-        etapa?: T;
-        descripcion_etapa?: T;
-        orden?: T;
-        id?: T;
-      };
-  activa?: T;
-  destacada?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -817,33 +670,6 @@ export interface CorreosNotificacionSelect<T extends boolean = true> {
         enviar_24_7?: T;
         hora_inicio?: T;
         hora_fin?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "testimonios_select".
- */
-export interface TestimoniosSelect<T extends boolean = true> {
-  nombre_cliente?: T;
-  empresa?: T;
-  testimonio?: T;
-  proyecto_relacionado?: T;
-  tipo_servicio?: T;
-  calificacion?: T;
-  foto_cliente?: T;
-  fecha_testimonio?: T;
-  publicado?: T;
-  destacado?: T;
-  correo_cliente?: T;
-  telefono_cliente?: T;
-  respuesta_estudio?: T;
-  etiquetas?:
-    | T
-    | {
-        etiqueta?: T;
-        id?: T;
       };
   updatedAt?: T;
   createdAt?: T;
