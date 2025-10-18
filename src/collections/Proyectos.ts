@@ -69,6 +69,16 @@ export const Proyectos: CollectionConfig = {
       },
     },
     {
+      name: 'destacado',
+      type: 'checkbox',
+      label: 'Mostrar en Página de Proyectos',
+      defaultValue: false,
+      admin: {
+        description: 'Marcar para exhibir este proyecto en la página de proyectos del sitio web',
+        position: 'sidebar',
+      },
+    },
+    {
       name: 'imagenes',
       type: 'array',
       label: 'Galería de Imágenes',
@@ -82,23 +92,7 @@ export const Proyectos: CollectionConfig = {
           relationTo: 'media',
           required: true,
           label: 'Imagen',
-        },
-        {
-          name: 'titulo_imagen',
-          type: 'text',
-          label: 'Título de la Imagen',
-        },
-        {
-          name: 'descripcion_imagen',
-          type: 'textarea',
-          label: 'Descripción de la Imagen',
-        },
-        {
-          name: 'es_imagen_principal',
-          type: 'checkbox',
-          label: '¿Es imagen principal?',
-          defaultValue: false,
-        },
+        }
       ],
     },
     {

@@ -26,7 +26,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
     meta: {
-      title: 'Impronta - Estudio de Arquitectura',
+      title: 'Panel Impronta | Estudio de Arquitectura',
       description: 'Panel de administración del estudio de arquitectura e interiorismo',
     },
     dateFormat: 'dd/MM/yyyy HH:mm',

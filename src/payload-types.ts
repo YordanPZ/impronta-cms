@@ -235,14 +235,15 @@ export interface Proyecto {
    */
   estado?: ('desarrollo' | 'finalizado' | 'construccion' | 'aprobado') | null;
   /**
+   * Marcar para exhibir este proyecto en la página de proyectos del sitio web
+   */
+  destacado?: boolean | null;
+  /**
    * Colección de imágenes del proyecto
    */
   imagenes?:
     | {
         imagen: number | Media;
-        titulo_imagen?: string | null;
-        descripcion_imagen?: string | null;
-        es_imagen_principal?: boolean | null;
         id?: string | null;
       }[]
     | null;
@@ -622,13 +623,11 @@ export interface ProyectosSelect<T extends boolean = true> {
   descripcion?: T;
   ubicacion?: T;
   estado?: T;
+  destacado?: T;
   imagenes?:
     | T
     | {
         imagen?: T;
-        titulo_imagen?: T;
-        descripcion_imagen?: T;
-        es_imagen_principal?: T;
         id?: T;
       };
   caracteristicas?:
