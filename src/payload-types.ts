@@ -294,54 +294,6 @@ export interface CorreosNotificacion {
    * Dirección de correo electrónico para recibir notificaciones
    */
   email: string;
-  /**
-   * Tipo específico de notificación que recibirá este correo
-   */
-  tipo_notificacion:
-    | 'nuevo_proyecto'
-    | 'consulta_cliente'
-    | 'actualizacion_proyecto'
-    | 'solicitud_servicio'
-    | 'comentario_blog'
-    | 'todas';
-  /**
-   * Nivel de prioridad para las notificaciones
-   */
-  prioridad?: ('alta' | 'media' | 'baja') | null;
-  /**
-   * Indica si este correo debe recibir notificaciones
-   */
-  activo?: boolean | null;
-  /**
-   * Notas adicionales sobre el propósito de este correo
-   */
-  descripcion?: string | null;
-  /**
-   * Número de teléfono opcional para contacto adicional
-   */
-  telefono?: string | null;
-  /**
-   * Área o departamento al que pertenece este contacto
-   */
-  departamento?: string | null;
-  /**
-   * Idioma preferido para recibir notificaciones
-   */
-  idioma_preferido?: ('es' | 'en' | 'pt') | null;
-  /**
-   * Configuración de horarios para recibir notificaciones
-   */
-  horario_notificacion?: {
-    enviar_24_7?: boolean | null;
-    /**
-     * Formato 24h (ej: 09:00)
-     */
-    hora_inicio?: string | null;
-    /**
-     * Formato 24h (ej: 18:00)
-     */
-    hora_fin?: string | null;
-  };
   updatedAt: string;
   createdAt: string;
 }
@@ -641,20 +593,6 @@ export interface CategoriasSelect<T extends boolean = true> {
 export interface CorreosNotificacionSelect<T extends boolean = true> {
   nombre?: T;
   email?: T;
-  tipo_notificacion?: T;
-  prioridad?: T;
-  activo?: T;
-  descripcion?: T;
-  telefono?: T;
-  departamento?: T;
-  idioma_preferido?: T;
-  horario_notificacion?:
-    | T
-    | {
-        enviar_24_7?: T;
-        hora_inicio?: T;
-        hora_fin?: T;
-      };
   updatedAt?: T;
   createdAt?: T;
 }
