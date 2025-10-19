@@ -72,7 +72,7 @@ export interface Config {
     proyectos: Proyecto;
     categorias: Categoria;
     'correos-notificacion': CorreosNotificacion;
-    'articulos-blog': ArticulosBlog;
+    'paginas-con-tabs': PaginasConTab;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -84,7 +84,7 @@ export interface Config {
     proyectos: ProyectosSelect<false> | ProyectosSelect<true>;
     categorias: CategoriasSelect<false> | CategoriasSelect<true>;
     'correos-notificacion': CorreosNotificacionSelect<false> | CorreosNotificacionSelect<true>;
-    'articulos-blog': ArticulosBlogSelect<false> | ArticulosBlogSelect<true>;
+    'paginas-con-tabs': PaginasConTabsSelect<false> | PaginasConTabsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -346,29 +346,32 @@ export interface CorreosNotificacion {
   createdAt: string;
 }
 /**
- * Gestión de artículos y publicaciones para el blog del estudio
+ * Páginas usando Tabs - Secciones organizadas en pestañas
  *
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "articulos-blog".
+ * via the `definition` "paginas-con-tabs".
  */
-export interface ArticulosBlog {
+export interface PaginasConTab {
   id: number;
-  /**
-   * Título atractivo y descriptivo del artículo
-   */
   titulo: string;
   /**
-   * URL amigable para el artículo (se genera automáticamente)
+   * Ej: home, about, services, contact
    */
-  slug?: string | null;
-  /**
-   * Breve resumen del contenido del artículo (máximo 250 caracteres)
-   */
-  resumen: string;
-  /**
-   * Contenido completo y detallado del artículo
-   */
-  contenido: {
+  slug: string;
+  heroActivo?: boolean | null;
+  heroTitulo?: string | null;
+  heroSubtitulo?: string | null;
+  heroImagenFondo?: (number | null) | Media;
+  heroBotones?:
+    | {
+        texto: string;
+        enlace: string;
+        id?: string | null;
+      }[]
+    | null;
+  aboutActivo?: boolean | null;
+  aboutTitulo?: string | null;
+  aboutContenido?: {
     root: {
       type: string;
       children: {
@@ -382,85 +385,67 @@ export interface ArticulosBlog {
       version: number;
     };
     [k: string]: unknown;
-  };
-  /**
-   * Imagen principal que representa el artículo
-   */
-  imagen_destacada?: (number | null) | Media;
-  /**
-   * Nombre del arquitecto o diseñador que escribió el artículo
-   */
-  autor: string;
-  /**
-   * Categoría temática del artículo
-   */
-  categoria:
-    | 'arquitectura-residencial'
-    | 'interiorismo'
-    | 'paisajismo'
-    | 'diseno-marcas'
-    | 'tendencias'
-    | 'materiales'
-    | 'sostenibilidad'
-    | 'proyectos-destacados'
-    | 'consejos-tips'
-    | 'eventos-noticias';
-  /**
-   * Etiquetas para ayudar a los lectores a encontrar contenido relacionado
-   */
-  etiquetas?:
-    | {
-        etiqueta: string;
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * Fecha en que se publicará el artículo
-   */
-  fecha_publicacion: string;
-  /**
-   * Estado actual del artículo
-   */
-  estado?: ('borrador' | 'revision' | 'publicado' | 'archivado') | null;
-  /**
-   * Marcar como artículo destacado en la página principal del blog
-   */
-  destacado?: boolean | null;
-  /**
-   * Tiempo estimado de lectura en minutos (se calcula automáticamente si se deja vacío)
-   */
-  lectura_estimada?: number | null;
-  /**
-   * Descripción corta para SEO (máximo 160 caracteres)
-   */
-  meta_descripcion?: string | null;
-  /**
-   * Palabras clave para optimización de motores de búsqueda
-   */
-  palabras_clave?:
-    | {
-        palabra_clave: string;
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * Imágenes adicionales para ilustrar el contenido del artículo
-   */
-  imagenes_galeria?:
+  } | null;
+  aboutImagenes?:
     | {
         imagen: number | Media;
-        pie_de_foto?: string | null;
+        descripcion?: string | null;
         id?: string | null;
       }[]
     | null;
+  aboutLayout?: ('text-left' | 'text-right' | 'text-center') | null;
+  serviciosActivo?: boolean | null;
+  serviciosTitulo?: string | null;
+  serviciosDescripcion?: string | null;
+  serviciosLista?:
+    | {
+        nombre: string;
+        descripcion?: string | null;
+        icono?: (number | null) | Media;
+        precio?: string | null;
+        enlace?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  galeriaActivo?: boolean | null;
+  galeriaTitulo?: string | null;
+  galeriaDescripcion?: string | null;
+  galeriaImagenes?:
+    | {
+        imagen: number | Media;
+        titulo?: string | null;
+        descripcion?: string | null;
+        categoria?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  galeriaColumnas?: ('2' | '3' | '4') | null;
+  contactoActivo?: boolean | null;
+  contactoTitulo?: string | null;
+  contactoDescripcion?: string | null;
+  contactoInfo?: {
+    telefono?: string | null;
+    email?: string | null;
+    direccion?: string | null;
+    horarios?: string | null;
+  };
+  mostrarFormulario?: boolean | null;
   /**
-   * Permitir que los lectores dejen comentarios en este artículo
+   * Título que aparece en Google (máx. 60 caracteres)
    */
-  permitir_comentarios?: boolean | null;
+  seoTitle?: string | null;
   /**
-   * Contador de visitas al artículo
+   * Descripción que aparece en Google (máx. 160 caracteres)
    */
-  visitas?: number | null;
+  seoDescription?: string | null;
+  /**
+   * Separadas por comas
+   */
+  seoKeywords?: string | null;
+  /**
+   * Imagen que aparece cuando se comparte en redes sociales
+   */
+  seoImage?: (number | null) | Media;
   updatedAt: string;
   createdAt: string;
 }
@@ -492,8 +477,8 @@ export interface PayloadLockedDocument {
         value: number | CorreosNotificacion;
       } | null)
     | ({
-        relationTo: 'articulos-blog';
-        value: number | ArticulosBlog;
+        relationTo: 'paginas-con-tabs';
+        value: number | PaginasConTab;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -675,42 +660,75 @@ export interface CorreosNotificacionSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "articulos-blog_select".
+ * via the `definition` "paginas-con-tabs_select".
  */
-export interface ArticulosBlogSelect<T extends boolean = true> {
+export interface PaginasConTabsSelect<T extends boolean = true> {
   titulo?: T;
   slug?: T;
-  resumen?: T;
-  contenido?: T;
-  imagen_destacada?: T;
-  autor?: T;
-  categoria?: T;
-  etiquetas?:
+  heroActivo?: T;
+  heroTitulo?: T;
+  heroSubtitulo?: T;
+  heroImagenFondo?: T;
+  heroBotones?:
     | T
     | {
-        etiqueta?: T;
+        texto?: T;
+        enlace?: T;
         id?: T;
       };
-  fecha_publicacion?: T;
-  estado?: T;
-  destacado?: T;
-  lectura_estimada?: T;
-  meta_descripcion?: T;
-  palabras_clave?:
-    | T
-    | {
-        palabra_clave?: T;
-        id?: T;
-      };
-  imagenes_galeria?:
+  aboutActivo?: T;
+  aboutTitulo?: T;
+  aboutContenido?: T;
+  aboutImagenes?:
     | T
     | {
         imagen?: T;
-        pie_de_foto?: T;
+        descripcion?: T;
         id?: T;
       };
-  permitir_comentarios?: T;
-  visitas?: T;
+  aboutLayout?: T;
+  serviciosActivo?: T;
+  serviciosTitulo?: T;
+  serviciosDescripcion?: T;
+  serviciosLista?:
+    | T
+    | {
+        nombre?: T;
+        descripcion?: T;
+        icono?: T;
+        precio?: T;
+        enlace?: T;
+        id?: T;
+      };
+  galeriaActivo?: T;
+  galeriaTitulo?: T;
+  galeriaDescripcion?: T;
+  galeriaImagenes?:
+    | T
+    | {
+        imagen?: T;
+        titulo?: T;
+        descripcion?: T;
+        categoria?: T;
+        id?: T;
+      };
+  galeriaColumnas?: T;
+  contactoActivo?: T;
+  contactoTitulo?: T;
+  contactoDescripcion?: T;
+  contactoInfo?:
+    | T
+    | {
+        telefono?: T;
+        email?: T;
+        direccion?: T;
+        horarios?: T;
+      };
+  mostrarFormulario?: T;
+  seoTitle?: T;
+  seoDescription?: T;
+  seoKeywords?: T;
+  seoImage?: T;
   updatedAt?: T;
   createdAt?: T;
 }

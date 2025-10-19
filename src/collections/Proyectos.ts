@@ -82,6 +82,10 @@ export const Proyectos: CollectionConfig = {
       name: 'imagenes',
       type: 'array',
       label: 'Galería de Imágenes',
+        labels: {
+    singular: 'Imagen',
+    plural: 'Imagenes',
+  },
       admin: {
         description: 'Colección de imágenes del proyecto',
       },

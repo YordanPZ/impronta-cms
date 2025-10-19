@@ -12,8 +12,8 @@ import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Categorias } from './collections/Categorias'
 import { CorreosNotificacion } from './collections/CorreosNotificacion'
-import { ArticulosBlog } from './collections/ArticulosBlog'
 import { Proyectos } from './collections/Proyectos'
+import { PaginasConTabs } from './collections/PaginasConTabs'
 import { es } from '@payloadcms/translations/languages/es'
 
 const filename = fileURLToPath(import.meta.url)
@@ -35,7 +35,14 @@ export default buildConfig({
     fallbackLanguage: 'es',
     supportedLanguages: { es },
   },
-  collections: [Users, Media, Proyectos, Categorias, CorreosNotificacion, ArticulosBlog],
+  collections: [
+    Users, 
+    Media, 
+    Proyectos, 
+    Categorias, 
+    CorreosNotificacion, 
+    PaginasConTabs,
+  ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
