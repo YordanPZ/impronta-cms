@@ -11,6 +11,12 @@ export const CorreosNotificacion: CollectionConfig = {
     singular: 'Correo de Notificación',
     plural: 'Correos de Notificación',
   },
+    access: {
+    read: () => true, // Acceso público de lectura
+    create: ({ req: { user } }) => !!user,
+    update: ({ req: { user } }) => !!user,
+    delete: ({ req: { user } }) => !!user,
+  },
   fields: [
     {
       name: 'nombre',
